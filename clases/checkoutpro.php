@@ -14,7 +14,9 @@ $dato = $sql->fetch(PDO::FETCH_ASSOC);
 
 //echo $dato['mp_access_token'];
 $mpaccess_token = $dato['mp_access_token'];
+$mp_public_key = $dato['mp_public_key'];
 echo $mpaccess_token ;
+echo $mp_public_key ;
 
 //MercadoPago\SDK::setAccessToken('APP_USR-1670974527854290-011600-aedea8921d5723ed3df144485bdb1134-1057624532');
 MercadoPago\SDK::setAccessToken($mpaccess_token);
@@ -431,7 +433,7 @@ if ($productos != null) {
 
        
 
-        const mp = new MercadoPago(PUBLIC_KEYMP,{locale: 'es-AR'})
+        const mp = new MercadoPago($mp_public_key,{locale: 'es-AR'})
 
         mp.checkout({
             preference: {
