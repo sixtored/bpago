@@ -4,6 +4,7 @@ require 'config/database.php';
 require 'vendor/autoload.php';
 
 // Compruebo que la url tenga el ?code= y el state de mercadopago
+$code = isset($_GET['code'])?$_GET['code']:"";
 if (isset($_GET['code']) and isset($_GET['state'])) {
 
     $db = new Database();
@@ -31,7 +32,7 @@ if (isset($_GET['code']) and isset($_GET['state'])) {
 
     $response = curl_exec($curl);
 
-    //var_dump($response) ;
+    var_dump($response) ;
     /*
     {"access_token":"APP_USR-1827711016259681-011905-46b99b8aa9760afa190a8d377522c713-1057624532",
     "token_type":"bearer",
