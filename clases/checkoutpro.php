@@ -16,7 +16,8 @@ $dato = $sql->fetch(PDO::FETCH_ASSOC);
 $mpaccess_token = $dato['mp_access_token'];
 echo $mpaccess_token ;
 
-MercadoPago\SDK::setAccessToken('APP_USR-1670974527854290-011600-aedea8921d5723ed3df144485bdb1134-1057624532');
+//MercadoPago\SDK::setAccessToken('APP_USR-1670974527854290-011600-aedea8921d5723ed3df144485bdb1134-1057624532');
+MercadoPago\SDK::setAccessToken($mpaccess_token);
 
 $preference = new MercadoPago\Preference() ;
 $productos_mp = array() ;
@@ -242,7 +243,7 @@ if ($productos != null) {
                                         "default_installments" => 1
                                     );
                                     
-                                    $mp_fee_owner = 20.00 ;
+                                    $mp_fee_owner =2.00 ;
                                     // Creación de un código external reference para vincular el pago con un pedido en nuestra DB
                                     $preference->external_reference = $idabonado ;
 
@@ -260,6 +261,7 @@ if ($productos != null) {
 
 
                                     // Datos del cliente..
+                                    $docu = 12345678 ;
 
                                     $payer = new MercadoPago\Payer();
                                     $payer->name = $nombre;
@@ -429,7 +431,7 @@ if ($productos != null) {
 
        
 
-        const mp = new MercadoPago('APP_USR-bd771ef4-5c86-43b6-a767-77aecac8af99',{locale: 'es-AR'})
+        const mp = new MercadoPago(PUBLIC_KEYMP,{locale: 'es-AR'})
 
         mp.checkout({
             preference: {

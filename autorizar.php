@@ -4,7 +4,7 @@ require 'config/config.php';
 require 'config/database.php';
 
 $idstatus = uniqid();
-$url = "https://auth.mercadopago.com.ar/authorization?client_id=1827711016259681&response_type=code&platform_id=mp&state=".$idstatus."&redirect_uri=https://www.quimili.com.ar/bpago/redirecuri.php" ;
+$url = "https://auth.mercadopago.com.ar/authorization?client_id=".CLIENT_IDMP."&response_type=code&platform_id=mp&state=".$idstatus."&redirect_uri=https://www.quimili.com.ar/bpago/redirecuri.php" ;
 //https://www.quimili.com.ar/bpago/webhooks.php?code=TG-61e77bcc3fcc7f001a4fe35f-1057629763&state=61e77b3313bc
 
 ?>
