@@ -94,7 +94,7 @@ if (isset($_GET['code']) and isset($_GET['state'])) {
             VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $sql_insert->execute([$access_token, $public_key, $refresh_token, $user_id, $expira, $mpstatus,  $scope, $token_type, $live_mode]);
             echo '------<br>';
-            echo $acces_token . '<br>';
+            echo $access_token . '<br>';
             echo $public_key . '<br>';
             echo $refresh_token . '<br>';
             echo $mpstatus . '<br>';
