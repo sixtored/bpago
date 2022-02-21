@@ -265,7 +265,7 @@ if ($productos != null) {
 
                                     // Datos del cliente..
                                     $docu = 12345678 ;
-
+/*
                                     $payer = new MercadoPago\Payer();
                                     $payer->name = $nombre;
                                     $payer->surname = '';
@@ -296,7 +296,7 @@ if ($productos != null) {
                                     $payer->last_purchase = '';
 
                                     $preference->payer = $payer;
-
+*/
                                     
                                     $preference->save();
                                 ?>  
