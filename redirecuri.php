@@ -16,7 +16,7 @@ if (isset($_GET['code']) and isset($_GET['state'])) {
 
     $url = 'https://api.mercadopago.com/oauth/token';
     //$post = '&client_secret=C0C9S3igJnBq0qYRhVsHH8hrLqWloLK8&client_id=1827711016259681&grant_type=authorization_code&code=' . $code . '&redirect_uri=https://www.quimili.com.ar/bpago/redirecuri.php';
-    $post = '&client_secret='.ACCESS_TOKEN_MARKETPLACE.'&client_id='.CLIENT_IDMP.'&grant_type=authorization_code&code=' . $code . '&redirect_uri=https://www.quimili.com.ar/bpago/redirecuri.php';
+    $post = '&client_secret='.ACCESS_TOKEN_MARKETPLACE.'&grant_type=authorization_code&code=' . $code . '&redirect_uri=https://www.quimili.com.ar/bpago/redirecuri.php';
 
     $curl = curl_init();
 
@@ -46,10 +46,10 @@ if (isset($_GET['code']) and isset($_GET['state'])) {
     if (curl_errno($curl)) echo curl_errno($curl);
     else $contents = json_decode($response, true);
     $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-   // echo $httpcode ;
+    echo $httpcode ;
+    var_dump($contents);
     if (isset($contents['user_id'])) {
         $ok = true ;
-        var_dump($contents);
        
         $access_token   = $contents['access_token'];
         $token_type     = $contents['token_type'];
