@@ -16,8 +16,8 @@ if (isset($_GET['code']) and isset($_GET['state'])) {
     // Configuro para hacer el POST y obtener el token y datos del usuario
 
     $url = 'https://api.mercadopago.com/oauth/token';
-    //$post = '&client_secret=C0C9S3igJnBq0qYRhVsHH8hrLqWloLK8&client_id=1827711016259681&grant_type=authorization_code&code=' . $code . '&redirect_uri=https://www.quimili.com.ar/bpago/redirecuri.php';
-    $post = '&client_secret='.ACCESS_TOKEN_MARKETPLACE.'&grant_type=authorization_code&code=' . $code . '&redirect_uri=https://www.quimili.com.ar/bpago/redirecuri.php';
+    $post = '&client_secret='.ACCESS_TOKEN_MARKETPLACE.'&client_id='.CLIENT_IDMP.'&grant_type=authorization_code&code=' . $code . '&redirect_uri=https://www.quimili.com.ar/bpago/redirecuri.php';
+    //$post = '&client_secret='.ACCESS_TOKEN_MARKETPLACE.'&grant_type=authorization_code&code=' . $code . '&redirect_uri=https://www.quimili.com.ar/bpago/redirecuri.php';
 
     $curl = curl_init();
 
@@ -32,7 +32,7 @@ if (isset($_GET['code']) and isset($_GET['state'])) {
 
     $response = curl_exec($curl);
 
-    var_dump($response) ;
+    //var_dump($response) ;
     /*
     {"access_token":"APP_USR-1827711016259681-011905-46b99b8aa9760afa190a8d377522c713-1057624532",
     "token_type":"bearer",
