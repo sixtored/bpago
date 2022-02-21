@@ -247,9 +247,10 @@ if ($productos != null) {
                                     
                                     $mp_fee_owner =2.00 ;
                                     // Creación de un código external reference para vincular el pago con un pedido en nuestra DB
-                                    $preference->external_reference = $idabonado ;
+                                    $preference->external_reference = $idcta ;
 
                                     // Si van a cobrar una comision por venta
+                                    $preference->marketplace = CLIENT_IDMP ;
                                     $preference->marketplace_fee = floatval($mp_fee_owner);
 
                                     // Opcional para setear las url del webhook
