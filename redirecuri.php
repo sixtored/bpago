@@ -48,7 +48,7 @@ if (isset($_GET['code']) and isset($_GET['state'])) {
     else $contents = json_decode($response, true);
     $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     echo $httpcode ;
-    //var_dump($contents);
+    var_dump($contents);
     if (isset($contents['user_id'])) {
         $ok = true ;
        
