@@ -49,7 +49,7 @@ if (isset($_GET['code']) and isset($_GET['state'])) {
    // echo $httpcode ;
     if (isset($contents['user_id'])) {
         $ok = true ;
-        //var_dump($contents);
+        var_dump($contents);
        
         $access_token   = $contents['access_token'];
         $token_type     = $contents['token_type'];
