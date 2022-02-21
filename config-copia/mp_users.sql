@@ -27,7 +27,7 @@ CREATE TABLE `MP_USERS`  (
   `mp_public_key` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `mp_refresh_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `mp_user_id` int(11) NULL DEFAULT 0,
-  `mp_expired_in` int(11) NULL DEFAULT 0,
+  `mp_expired_in` date NULL DEFAULT 0,
   `mp_status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `mp_created_at` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP,
   `mp_update_at` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),

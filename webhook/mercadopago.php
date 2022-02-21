@@ -6,7 +6,7 @@
     $db = new Database();
     $con = $db->conectar();
     
-    MercadoPago\SDK::setAccessToken('TEST-1491103792399277-100219-ba53f79570c6591431f83ae8d1b36a26-78486616');
+    MercadoPago\SDK::setAccessToken(ACCESS_TOKEN_MARKETPLACE);
    // MercadoPago\SDK::setIntegratorId(getenv('MP_DEV_CODE'));
     //$info = json_decode($this->input->raw_input_stream);
     $json = file_get_contents('php://input') ;
@@ -16,10 +16,8 @@
     $archivo = fopen('appication.txt','w+');
     fputs($archivo, $info);
     fclose($archivo);
-   echo http_response_code(200) ;
-//}    
-
-exit ;
+   //echo http_response_code(200) ;
+//} 
 
     if (isset($info->type)) {
         switch ($info->type) {
