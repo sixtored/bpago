@@ -433,7 +433,7 @@ if ($productos != null) {
 
        
 
-        const mp = new MercadoPago($mp_public_key,{locale: 'es-AR'})
+        const mp = new MercadoPago(<?php echo "'".$mp_public_key."'" ?>,{locale: 'es-AR'})
 
         mp.checkout({
             preference: {
