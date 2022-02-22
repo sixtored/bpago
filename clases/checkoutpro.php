@@ -241,9 +241,9 @@ if ($productos != null) {
                                     $preference->payment_methods = array(
                                         "excluded_payment_types" => array(
                                             array('id' => 'ticket')
-                                        ),
-                                        "installments" => 12,
-                                        "default_installments" => 1
+                                        )
+                                       // "installments" => 12,
+                                       // "default_installments" => 1
                                     );
                                     
                                     $mp_fee_owner =2.00 ;
