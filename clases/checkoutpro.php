@@ -251,7 +251,8 @@ if ($productos != null) {
                                     $preference->external_reference = $idcta ;
 
                                     // Si van a cobrar una comision por venta
-                                    $preference->marketplace = CLIENT_IDMP ;
+                                    $preference->client_id = CLIENT_IDMP ;
+                                    $preference->marketplace = 'MP-MKT-'.CLIENT_IDMP ;
                                     $preference->marketplace_fee = floatval($mp_fee_owner);
 
                                     // Opcional para setear las url del webhook
