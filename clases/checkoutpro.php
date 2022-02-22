@@ -15,8 +15,9 @@ $dato = $sql->fetch(PDO::FETCH_ASSOC);
 //echo $dato['mp_access_token'];
 $mpaccess_token = $dato['mp_access_token'];
 $mp_public_key = $dato['mp_public_key'];
-//echo $mpaccess_token ;
-//echo $mp_public_key ;
+echo $mpaccess_token ;
+echo '<br>' ;
+echo $mp_public_key ;
 
 //MercadoPago\SDK::setAccessToken('APP_USR-1670974527854290-011600-aedea8921d5723ed3df144485bdb1134-1057624532');
 MercadoPago\SDK::setAccessToken($mpaccess_token);
@@ -225,8 +226,8 @@ if ($productos != null) {
                                     $preference->items = $productos_mp ;
 
                                     $preference->back_urls = array(
-                                        "success" => "http://localhost/bpago/clases/captura.php",
-                                        "failure" => "http://localhost/bpago/clases/fallo.php"
+                                        "success" => "https://www.quimili.com.ar/bpago/clases/captura.php",
+                                        "failure" => "https://www.quimili.com.ar/bpago/clases/fallo.php"
                                     );
                                     
                                     $preference->auto_return = "approved" ;
@@ -250,7 +251,7 @@ if ($productos != null) {
                                     $preference->external_reference = $idcta ;
 
                                     // Si van a cobrar una comision por venta
-                                    //$preference->marketplace = CLIENT_IDMP ;
+                                    $preference->marketplace = CLIENT_IDMP ;
                                     $preference->marketplace_fee = floatval($mp_fee_owner);
 
                                     // Opcional para setear las url del webhook
@@ -296,7 +297,7 @@ if ($productos != null) {
                                     $payer->last_purchase = '';
 
                                     $preference->payer = $payer;
-*/
+*/                                  var_dump($preference) ;
                                     
                                     $preference->save();
                                 ?>  
