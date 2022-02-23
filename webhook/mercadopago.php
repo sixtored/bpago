@@ -14,12 +14,12 @@ $info = json_decode($json);
 
 //if(is_array($info)){
 $archivo = fopen('appication.txt', 'w+');
-fwrite($fh, $info);
+fwrite($fh, $json);
 //fputs($archivo, $info);
 fclose($archivo);
 //echo http_response_code(200) ;
 //} 
-/*
+
 $sql = $con->prepare("INSERT INTO WEBHOOKS (id_mp, live_mode, aplication_id, user_id, version, api_version, type, action, info)
                 VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 if ($info->live_mode = "true") $live_mode = 1;
@@ -27,12 +27,13 @@ else $live_mode = 0;
 $id             = $info->id ;
 $application_id = $info->application_id ;
 $user_id        = $info->user_id  ;
-$version        = $info->version ;
+//$version        = $info->version ;
+$version = '22' ;
 $api_version    = $info->api_version ;
 $type           = $info->type ;
 $action         = $info->action ;
-$sql->execute([$id, $live_mode, $application_id, $user_id, $version, $api_version, $type, $action, $info]);
-*/
+$sql->execute([$id, $live_mode, $application_id, $user_id, $version, $api_version, $type, $action, $json]);
+
 
 echo http_response_code(200);
 
