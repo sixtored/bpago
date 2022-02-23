@@ -20,22 +20,56 @@ fclose($archivo);
 //echo http_response_code(200) ;
 //} 
 
+if (isset($info->topic)) {
+    $collection_id = $info->resource;
+    $user_id = $info->user_id;
+    $topic = $info->topic;
+    $application_id = $info->application_id;
+    $version = $info->attempts;
+    $sql = $con->prepare("INSERT INTO WEBHOOKS (aplication_id, user_id, version, type, action, info, resource)
+                VALUE (?, ?, ?, ?, ?, ?, ?)");
+
+    $sql->execute([$application_id, $user_id, $version, $topic, $json, $collection_id]);
+} else {
+    if (isset($info->type)) {
+
+        $sql = $con->prepare("INSERT INTO WEBHOOKS (id_mp, live_mode, aplication_id, user_id, version, api_version, type, action, info)
+        VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        if ($info->live_mode = "true") $live_mode = 1;
+        else $live_mode = 0;
+        $id             = $info->id;
+        $application_id = $info->application_id;
+        $user_id        = $info->user_id;
+        //$version        = $info->version ;
+        $version = '22';
+        $api_version    = $info->api_version;
+        $type           = $info->type;
+        $action         = $info->action;
+        $sql->execute([$id, $live_mode, $application_id, $user_id, $version, $api_version, $type, $action, $json]);
+
+    }
+}
+
+echo http_response_code(200);
+/*
 $sql = $con->prepare("INSERT INTO WEBHOOKS (id_mp, live_mode, aplication_id, user_id, version, api_version, type, action, info)
                 VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 if ($info->live_mode = "true") $live_mode = 1;
 else $live_mode = 0;
-$id             = $info->id ;
-$application_id = $info->application_id ;
-$user_id        = $info->user_id  ;
+$id             = $info->id;
+$application_id = $info->application_id;
+$user_id        = $info->user_id;
 //$version        = $info->version ;
-$version = '22' ;
-$api_version    = $info->api_version ;
-$type           = $info->type ;
-$action         = $info->action ;
+$version = '22';
+$api_version    = $info->api_version;
+$type           = $info->type;
+$action         = $info->action;
 $sql->execute([$id, $live_mode, $application_id, $user_id, $version, $api_version, $type, $action, $json]);
 
 
 echo http_response_code(200);
+
+*/
 
 if (isset($info->type)) {
     switch ($info->type) {
