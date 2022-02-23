@@ -21,6 +21,9 @@ echo $mp_public_key ;
 
 //MercadoPago\SDK::setAccessToken('APP_USR-1670974527854290-011600-aedea8921d5723ed3df144485bdb1134-1057624532');
 MercadoPago\SDK::setAccessToken($mpaccess_token);
+//MercadoPago\SDK::setPlatformId("PLATFORM_ID");
+//MercadoPago\SDK::setIntegratorId("INTEGRATOR_ID");
+//MercadoPago\SDK::setCorporationId("CORPORATION_ID");
 
 $preference = new MercadoPago\Preference() ;
 $productos_mp = array() ;
@@ -246,7 +249,7 @@ if ($productos != null) {
                                        // "default_installments" => 1
                                     );
                                     
-                                    $mp_fee_owner =2.00 ;
+                                    $mp_fee_owner = ($total * 2)/100 ;
                                     // Creación de un código external reference para vincular el pago con un pedido en nuestra DB
                                     $preference->external_reference = $idcta ;
 
