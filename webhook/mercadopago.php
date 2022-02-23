@@ -23,7 +23,7 @@ $sql = $con->prepare("INSERT INTO WEBHOOKS (id_mp, live_mode, aplication_id, use
                 VALUE (?, ?, ?, ?, ?, ?, ?, ?)");
 if ($info->live_mode = "true") $live_mode = 1;
 else $live_mode = 0;
-$sql->execute([$info->id, $live_mode, $info->aplication_id, $info->user_id, $info->version, $info->api_version, $info->type, $info->action]);
+$sql->execute([$info->id, $live_mode, $info->application_id, $info->user_id, $info->version, $info->api_version, $info->type, $info->action]);
 
 
 if (isset($info->type)) {
