@@ -26,8 +26,8 @@ if (isset($info->topic)) {
     $topic = $info->topic;
     $application_id = $info->application_id;
     $version = $info->attempts;
-    $sql = $con->prepare("INSERT INTO WEBHOOKS (aplication_id, user_id, version, type, action, info, resource)
-                VALUE (?, ?, ?, ?, ?, ?, ?)");
+    $sql = $con->prepare("INSERT INTO WEBHOOKS (aplication_id, user_id, version, type, info, resource)
+                VALUE (?, ?, ?, ?, ?, ?)");
 
     $sql->execute([$application_id, $user_id, $version, $topic, $json, $collection_id]);
 } else {
