@@ -12,24 +12,17 @@ MercadoPago\SDK::setAccessToken(ACCESS_TOKEN_MARKETPLACE);
 $json = file_get_contents('php://input');
 $info = json_decode($json);
 
-//if(is_array($info)){
-$archivo = fopen('appication.txt', 'w+');
-fwrite($fh, $json);
-//fputs($archivo, $info);
-fclose($archivo);
-//echo http_response_code(200) ;
-//} 
-
 if (isset($info->topic)) {
     $collection_id = $info->resource;
+    $data_id = substr($collection_id,13) ;
     $user_id = $info->user_id;
     $topic = $info->topic;
     $application_id = $info->application_id;
     $version = $info->attempts;
-    $sql = $con->prepare("INSERT INTO WEBHOOKS (aplication_id, user_id, version, type, info, resource)
+    $sql = $con->prepare("INSERT INTO WEBHOOKS (aplication_id, user_id, version, type, info, data_id, resource)
                 VALUE (?, ?, ?, ?, ?, ?)");
 
-    $sql->execute([$application_id, $user_id, $version, $topic, $json, $collection_id]);
+    $sql->execute([$application_id, $user_id, $version, $topic, $json, $data_id, $collection_id]);
 } else {
     if (isset($info->type)) {
 
@@ -50,7 +43,8 @@ if (isset($info->topic)) {
     }
 }
 
-echo http_response_code(200);
+http_response_code(200);
+exit ;
 /*
 $sql = $con->prepare("INSERT INTO WEBHOOKS (id_mp, live_mode, aplication_id, user_id, version, api_version, type, action, info)
                 VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?)");
