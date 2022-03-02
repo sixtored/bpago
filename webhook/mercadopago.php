@@ -43,8 +43,7 @@ $action = 'topic';
 $live_mode = 1;
 
 return http_response_code(200);
-exit ;
-/*
+
 
 if (isset($info->topic)) {
     $collection_id = $info->resource;
