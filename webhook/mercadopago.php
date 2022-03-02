@@ -14,15 +14,115 @@ $info = json_decode($json);
 
 if (isset($info->topic)) {
     $collection_id = $info->resource;
-    $data_id = substr($collection_id,13) ;
+    $data_id = substr($collection_id, 13);
     $user_id = $info->user_id;
     $topic = $info->topic;
     $application_id = $info->application_id;
     $version = $info->attempts;
-    $sql = $con->prepare("INSERT INTO WEBHOOKS (aplication_id, user_id, version, type, info, data_id, resource)
-                VALUE (?, ?, ?, ?, ?, ?)");
+    $action = 'topic';
+    $live_mode = 1;
+    $sql = $con->prepare("INSERT INTO WEBHOOKS (aplication_id, user_id, version, type, info, data_id, resource, action, live_mode)
+                VALUE (?, ?, ?, ?, ?, ?, ?, ?)");
 
-    $sql->execute([$application_id, $user_id, $version, $topic, $json, $data_id, $collection_id]);
+    $sql->execute([$application_id, $user_id, $version, $topic, $json, $data_id, $collection_id, $action, $live_mode]);
+
+    switch ($topic) {
+        case 'payments':
+
+
+            $url = 'https://api.mercadopago.com/v1/payments/' . $data_id;
+
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_TIMEOUT, 5);
+            curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array("Authorization: Bearer " . TOKEN_MP));
+
+
+            $response = curl_exec($curl);
+
+            if (curl_errno($curl)) echo curl_errno($curl);
+            else $contents = json_decode($response);
+
+            $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            if ($httpcode == 200) {
+                $email = $contents->payer->email;
+                //$status = $contents->status ;
+                $payment_method = $contents->payment_method_id;
+                $payment_type = $contents->payment_type_id;
+                $total = (float) $contents->transaction_amount;
+                $data = (array) $contents->additional_info->items;
+                $tpago = 1;
+                $d = new DateTime($contents->date_created);
+                $fch = $d->format('Y-m-d H:i:s');
+                $idcaja = 1;
+                $idcob = 1;
+                $payment = $data_id;
+                $status = $contents->status;
+                $collection_id = $contents->collector_id;
+                $preference_id = $contents->id;
+
+                $sql_consul = $con->prepare("SELECT id, payment_id FROM COBROS_MP WHERE payment_id =?");
+                $sql_consul->execute([$payment]);
+                if ($sql_consul->fetchColumn() > 0) {
+                    // ya se encuentra
+                } else {
+
+                    $sql = $con->prepare("INSERT INTO COBROS_MP (payment_id, _status, email, payment_type, payment_method, order_id, external_reference, collection_id, preference_id, fchpago, total) 
+                                values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $sql->execute([$payment, $status, $email, $payment_type, $payment_method, $order_id, $external_reference, $collection_id, $preference_id, $fch, $total]);
+                    $idcobro = $con->lastInsertId();
+                }
+
+
+                foreach ($data as $item) {
+                    $id = (int) $item['id'];
+                    // Buscamos si existe el item de pagado..
+                    $subtotal = (float) $item['unit_price'];
+                    $sql = $con->prepare("SELECT id, idcta, idabonado, pagado, periodo, nombre FROM CTABOTONPAGO WHERE id = ? and pagado = 0");
+                    $sql->execute([$id]);
+                    if ($sql->fetchColumn() > 0) {
+                        // existe el item pagado.. actualizamos el pago.. del abono 
+                        $dato = $sql->fetch(PDO::FETCH_ASSOC);
+                        $nombre = $dato['nombre'] . '[' . $dato['periodo'] . ']';
+                        $idabonado = $dato['idabonado'] ;
+                        $idcta = $dato['idcta'] ;
+                        $periodo = $dato['periodo'] ;
+
+                        $sql_upd = $con->prepare("UPDATE CTABOTONPAGO SET qimpo = :_qimpo, pagado = :_pagado, idcob = :_idcob, tpago = :_tpago,
+                        idcaja = :_idcaja, fchpago = :_fch, pago_id = :_pago_id where id = :_id");
+                        $sql_upd->bindParam(':_qimpo', $subtotal);
+                        $sql_upd->bindParam(':_pagado', $pagado);
+                        $sql_upd->bindParam(':_idcob', $idcob);
+                        $sql_upd->bindParam(':_tpago', $tpago);
+                        $sql_upd->bindParam(':_idcaja', $idcaja);
+                        $sql_upd->bindParam(':_fch', $fch);
+                        $sql_upd->bindParam(':_pago_id', $payment);
+                        $sql_upd->bindParam(':_id', $id);
+                        $sql_upd->execute();
+
+
+                        $sql_insert = $con->prepare("INSERT INTO COBROS_MP_DETALLE (id_cobrosmp, idabonado, periodo, importe, detalle,
+                        fchpago, idcta, idctapago) VALUE (?, ?, ?, ?, ?, ?, ?, ?)");
+                        $sql_insert->execute([$idcobro, $idabonado, $periodo, $subtotal, $nombre,  $fch, $idcta, $id]);
+                    }
+                }
+                http_response_code(200);
+            } else {
+                // no existe el id del pago..
+                http_response_code(400);
+                $email = '';
+                //$status = '' ;
+                $payment_method = '';
+                $payment_type = '';
+                $total = 0;
+            }
+
+            curl_close($curl);
+
+            break;
+    }
 } else {
     if (isset($info->type)) {
 
@@ -39,12 +139,9 @@ if (isset($info->topic)) {
         $type           = $info->type;
         $action         = $info->action;
         $sql->execute([$id, $live_mode, $application_id, $user_id, $version, $api_version, $type, $action, $json]);
-
     }
 }
 
-http_response_code(200);
-exit ;
 /*
 $sql = $con->prepare("INSERT INTO WEBHOOKS (id_mp, live_mode, aplication_id, user_id, version, api_version, type, action, info)
                 VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -63,7 +160,7 @@ $sql->execute([$id, $live_mode, $application_id, $user_id, $version, $api_versio
 
 echo http_response_code(200);
 
-*/
+
 
 if (isset($info->type)) {
     switch ($info->type) {
@@ -129,3 +226,4 @@ if (isset($info->type)) {
 }
 echo http_response_code(200);
 return;
+*/
