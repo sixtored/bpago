@@ -27,6 +27,8 @@ $version = $info->attempts;
 $action = 'topic';
 $live_mode = 1;
 
+http_response_code(200);
+
 
 if (isset($info->topic)) {
     $collection_id = $info->resource;
@@ -102,9 +104,9 @@ if (isset($info->topic)) {
                         // existe el item pagado.. actualizamos el pago.. del abono 
                         $dato = $sql->fetch(PDO::FETCH_ASSOC);
                         $nombre = $dato['nombre'] . '[' . $dato['periodo'] . ']';
-                        $idabonado = $dato['idabonado'] ;
-                        $idcta = $dato['idcta'] ;
-                        $periodo = $dato['periodo'] ;
+                        $idabonado = $dato['idabonado'];
+                        $idcta = $dato['idcta'];
+                        $periodo = $dato['periodo'];
 
                         $sql_upd = $con->prepare("UPDATE CTABOTONPAGO SET qimpo = :_qimpo, pagado = :_pagado, idcob = :_idcob, tpago = :_tpago,
                         idcaja = :_idcaja, fchpago = :_fch, pago_id = :_pago_id where id = :_id");
@@ -138,6 +140,11 @@ if (isset($info->topic)) {
             curl_close($curl);
 
             break;
+
+        default:
+            $sql = $con->prepare("INSERT INTO WEBHOOKS (type, info, action, live_mode)
+            VALUE (?, ?, ?, ?)");
+            $sql->execute(['default', $json, 'test', 1]);
     }
 } else {
     if (isset($info->type)) {
