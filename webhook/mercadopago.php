@@ -27,11 +27,12 @@ MercadoPago\SDK::setAccessToken($mpaccess_token);
 $json = file_get_contents('php://input');
 $info = json_decode($json);
 
+/*
 $sql = $con->prepare("INSERT INTO WEBHOOKS (type, info, action, live_mode)
             VALUE (?, ?, ?, ?)");
 
 $sql->execute(['pueba', $json, 'test', 1]);
-
+*/
 
 $collection_id = $info->resource;
 $data_id = substr($collection_id, 13);
@@ -41,9 +42,6 @@ $application_id = $info->application_id;
 $version = $info->attempts;
 $action = 'topic';
 $live_mode = 1;
-
-return http_response_code(200);
-
 
 if (isset($info->topic)) {
     $collection_id = $info->resource;
@@ -58,6 +56,8 @@ if (isset($info->topic)) {
                 VALUE (?, ?, ?, ?, ?, ?, ?, ?)");
 
     $sql->execute([$application_id, $user_id, $version, $topic, $json, $data_id, $collection_id, $action, $live_mode]);
+
+    return http_response_code(200);
 
     switch ($topic) {
         case 'payments':
