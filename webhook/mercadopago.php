@@ -57,8 +57,6 @@ if (isset($info->topic)) {
 
     $sql->execute([$application_id, $user_id, $version, $topic, $json, $data_id, $collection_id, $action, $live_mode]);
 
-    return http_response_code(200);
-
     switch ($topic) {
         case 'payments':
 
@@ -79,6 +77,7 @@ if (isset($info->topic)) {
             else $contents = json_decode($response);
 
             $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            curl_close($curl);
             if ($httpcode == 200) {
                 $email = $contents->payer->email;
                 //$status = $contents->status ;
@@ -141,10 +140,10 @@ if (isset($info->topic)) {
                         $sql_insert->execute([$idcobro, $idabonado, $periodo, $subtotal, $nombre,  $fch, $idcta, $id]);
                     }
                 }
-                http_response_code(200);
+                return http_response_code(200);
             } else {
                 // no existe el id del pago..
-                http_response_code(400);
+               return http_response_code(400);
                 $email = '';
                 //$status = '' ;
                 $payment_method = '';
@@ -152,7 +151,7 @@ if (isset($info->topic)) {
                 $total = 0;
             }
 
-            curl_close($curl);
+           
 
             break;
 
