@@ -53,7 +53,7 @@ if (isset($info->topic)) {
     $action = 'topic';
     $live_mode = 1;
     $sql = $con->prepare("INSERT INTO WEBHOOKS (aplication_id, user_id, version, type, info, data_id, resource, action, live_mode)
-                VALUE (?, ?, ?, ?, ?, ?, ?, ?)");
+                VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     $sql->execute([$application_id, $user_id, $version, $topic, $json, $data_id, $collection_id, $action, $live_mode]);
 
