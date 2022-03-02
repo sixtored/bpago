@@ -6,7 +6,22 @@ require_once '../vendor/autoload.php';
 $db = new Database();
 $con = $db->conectar();
 
-MercadoPago\SDK::setAccessToken(ACCESS_TOKEN_MARKETPLACE);
+$clave = 1 ;
+
+$sql = $con->prepare("SELECT mp_access_token, mp_public_key, mp_user_id, mp_expired_in FROM MP_USERS WHERE id=?");
+$sql->execute([$clave]);
+$dato = $sql->fetch(PDO::FETCH_ASSOC);
+
+//echo $dato['mp_access_token'];
+$mpaccess_token = $dato['mp_access_token'];
+$mp_public_key = $dato['mp_public_key'];
+//echo $mpaccess_token ;
+//echo '<br>' ;
+//echo $mp_public_key ;
+
+MercadoPago\SDK::setAccessToken($mpaccess_token);
+
+//MercadoPago\SDK::setAccessToken(ACCESS_TOKEN_MARKETPLACE);
 // MercadoPago\SDK::setIntegratorId(getenv('MP_DEV_CODE'));
 //$info = json_decode($this->input->raw_input_stream);
 $json = file_get_contents('php://input');
