@@ -127,6 +127,7 @@ if (isset($info->topic)) {
 
                 foreach ($data as $item) {
                     $id = $item['id'];
+                    $detalle = $item['title'] ;
                     // Buscamos si existe el item de pagado..
                     $subtotal = (float) $item['unit_price'];
                     $sql = $con->prepare("SELECT id, idcta, idabonado, pagado, periodo, nombre FROM CTABOTONPAGO WHERE id = ? and pagado = 0");
@@ -154,7 +155,7 @@ if (isset($info->topic)) {
 
                         $sql_insert = $con->prepare("INSERT INTO COBROS_MP_DETALLE (id_cobrosmp, idabonado, periodo, importe, detalle,
                         fchpago, idcta, idctapago) VALUE (?, ?, ?, ?, ?, ?, ?, ?)");
-                        $sql_insert->execute([$idcobro, $idabonado, $periodo, $subtotal, $nombre,  $fch, $idcta, $id]);
+                        $sql_insert->execute([$idcobro, $idabonado, $periodo, $subtotal, $detalle,  $fch, $idcta, $id]);
                     }
                 }
                 return http_response_code(200);
