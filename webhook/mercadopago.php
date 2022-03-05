@@ -139,6 +139,7 @@ if (isset($info->topic)) {
                         $idabonado = $dato['idabonado'];
                         $idcta = $dato['idcta'];
                         $periodo = $dato['periodo'];
+                        $pagado = 1 ;
 
                         $sql_upd = $con->prepare("UPDATE CTABOTONPAGO SET qimpo = :_qimpo, pagado = :_pagado, idcob = :_idcob, tpago = :_tpago,
                         idcaja = :_idcaja, fchpago = :_fch, pago_id = :_pago_id where id = :_id");
@@ -161,7 +162,7 @@ if (isset($info->topic)) {
                 return http_response_code(200);
             } else {
                 // no existe el id del pago..
-               return http_response_code(400);
+               return http_response_code(200);
                 $email = '';
                 //$status = '' ;
                 $payment_method = '';
