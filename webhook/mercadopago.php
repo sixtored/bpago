@@ -68,32 +68,48 @@ if (isset($info->topic)) {
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_TIMEOUT, 5);
             curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-            curl_setopt($curl, CURLOPT_HTTPHEADER, array("Authorization: Bearer " . TOKEN_MP));
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array("Authorization: Bearer " . ACCESS_TOKEN_MARKETPLACE));
 
 
             $response = curl_exec($curl);
 
-            if (curl_errno($curl)) echo curl_errno($curl);
-            else $contents = json_decode($response);
+            if (curl_errno($curl)) {echo curl_errno($curl); }
+            else { 
+                $contents = json_decode($response, true);
+                $obj = json_decode($response) ;
+            }    
 
             $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
             curl_close($curl);
             if ($httpcode == 200) {
-                $email = $contents->payer->email;
+                if (isset($contents['payer']['email'])) $email = $contents['payer']['email'] ; else $email = ' ' ;
                 //$status = $contents->status ;
-                $payment_method = $contents->payment_method_id;
-                $payment_type = $contents->payment_type_id;
-                $total = (float) $contents->transaction_amount;
-                $data = (array) $contents->additional_info->items;
+                $payment_method = $contents['payment_method_id'];
+                $payment_type = $contents['payment_type_id'];
+                $total = (float) $contents['transaction_amount'];
+                $netocob = (float) $obj->transaction_details->net_received_amount ;
+               // $com_mk =  json_decode(json_encode($obj->charges_details,true),true) ;
+                $data = (array) $contents['additional_info']['items'] ;
+               // $commk = (float) $com_mk['0']['amounts']['original'] ;
+                $external_reference = $contents['external_reference'] ;
+                $com_mp =  json_decode(json_encode($obj->fee_details,true),true) ;
+                $commp = (float) $com_mp['0']['amount'] ;
+                // comision de mercado pago
+                $commk = (float) $com_mp['1']['amount'] ;
+
+                $netocob = $total - ($commp + $commk) ;
+                // comision del marketplace..
+                //var_dump($com_mp) ;
+                
                 $tpago = 1;
-                $d = new DateTime($contents->date_created);
+                $d = new DateTime($contents['date_created']);
                 $fch = $d->format('Y-m-d H:i:s');
                 $idcaja = 1;
                 $idcob = 1;
                 $payment = $data_id;
-                $status = $contents->status;
-                $collection_id = $contents->collector_id;
-                $preference_id = $contents->id;
+                $status = $contents['status'];
+                if (isset($contents['collector_id'])) $collection_id = $contents['collector_id']; else $collection_id = '' ;
+                $preference_id = $contents['id'];
 
                 $sql_consul = $con->prepare("SELECT id, payment_id FROM COBROS_MP WHERE payment_id =?");
                 $sql_consul->execute([$payment]);
@@ -101,15 +117,16 @@ if (isset($info->topic)) {
                     // ya se encuentra
                 } else {
 
-                    $sql = $con->prepare("INSERT INTO COBROS_MP (payment_id, _status, email, payment_type, payment_method, order_id, external_reference, collection_id, preference_id, fchpago, total) 
-                                values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                    $sql->execute([$payment, $status, $email, $payment_type, $payment_method, $order_id, $external_reference, $collection_id, $preference_id, $fch, $total]);
+                    $sql = $con->prepare("INSERT INTO COBROS_MP (payment_id, _status, email, payment_type, payment_method, order_id, external_reference, collection_id,
+                     preference_id, fchpago, total, commp, commk, netocob) 
+                                values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $sql->execute([$payment, $status, $email, $payment_type, $payment_method, $order_id, $external_reference, $collection_id, $preference_id, $fch, $total, $commp, $commk, $netocob]);
                     $idcobro = $con->lastInsertId();
                 }
 
 
                 foreach ($data as $item) {
-                    $id = (int) $item['id'];
+                    $id = $item['id'];
                     // Buscamos si existe el item de pagado..
                     $subtotal = (float) $item['unit_price'];
                     $sql = $con->prepare("SELECT id, idcta, idabonado, pagado, periodo, nombre FROM CTABOTONPAGO WHERE id = ? and pagado = 0");

@@ -251,7 +251,7 @@ if ($productos != null) {
                                     
                                     $mp_fee_owner = ($total * 2)/100 ;
                                     // Creación de un código external reference para vincular el pago con un pedido en nuestra DB
-                                    $preference->external_reference = $idcta ;
+                                    $preference->external_reference = $idabonado;
 
                                     // Si van a cobrar una comision por venta
                                     $preference->client_id = CLIENT_IDMP ;
