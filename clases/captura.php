@@ -102,7 +102,8 @@ if ($httpcode == 200) {
 
 
 
-            $noti = $noti . '<br> Total: ' . $total;
+            $noti = $noti . '<br> Total: ' . $total. '<br>' ;
+            $noti = $noti . '<a href="www.quimili.com.ar/bpago/comprobante.php"/>Comprobante</a>' ;
             $noti = $noti . '</html>';
         }
     }
