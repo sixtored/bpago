@@ -171,11 +171,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     break;
 
                 default:
-                    $sql = $con->prepare("INSERT INTO WEBHOOKS (type, info, action, live_mode)
-            VALUE (?, ?, ?, ?)");
-                    $sql->execute(['default', $json, 'test', 1]);
-                    http_response_code(201);
-                    return 201;
+                $sql = $con->prepare("INSERT INTO WEBHOOKS (type, info, action, live_mode)
+                VALUE (?, ?, ?, ?)");
+                $sql->execute(['default topic', $json, 'test', 1]);
+                http_response_code(201);
+                echo json_encode($res->getResponse("success", " ", 201, "Topic no existe.."));
+                return;
+                
             }
         } else {
             if (isset($info->type)) {
@@ -322,11 +324,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         break;
 
                     default:
+                       
+                        
                         $sql = $con->prepare("INSERT INTO WEBHOOKS (type, info, action, live_mode)
-                VALUE (?, ?, ?, ?)");
+                        VALUE (?, ?, ?, ?)");
                         $sql->execute(['default', $json, 'test', 1]);
                         http_response_code(201);
-                        return 201;
+                        echo json_encode($res->getResponse("success", " ", 201, "Type no existe.."));
+                        return;
+                        
                 }
             }
         }
