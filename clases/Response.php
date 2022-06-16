@@ -11,4 +11,7 @@
             );
         }
     }
+/*
+    {"status":"(OK)","data":[],"code":200,"message":"Recibido"}
+ */   
 ?>
