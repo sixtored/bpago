@@ -350,7 +350,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         //echo http_response_code(405); // Method not allowed
         //echo json_encode($res->getResponse("warning", null, 405, "Estructura no valida.."));
-        http_response_code(405);
+        http_response_code(200);
         return ;
     }
 } else {
