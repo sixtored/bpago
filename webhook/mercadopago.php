@@ -156,8 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }
                        http_response_code(200);
                         //json_encode($res->getResponse("(OK)", $data_id, 200, "Pago Creado"));
-                        return ;
-                        exit ;
+                        exit(1) ;
                     } else {
                         // no existe el id del pago..
                         $email = '';
@@ -167,8 +166,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $total = 0;
                         http_response_code(200);
                         //echo json_encode($res->getResponse("(OK)", " ", 200, "Id Pago No exite.."));
-                        return ;
-                        exit ;
+                       
+                        exit(1) ;
                         
                     }
 
@@ -181,8 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $sql->execute(['default topic', $json, 'test', 1]);
                 http_response_code(201);
                 //echo json_encode($res->getResponse("(CREATED)", " ", 201, "Topic no existe.."));
-                return  ;
-                exit;
+                exit(1);
                 
             }
         } else {
@@ -313,20 +311,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             }
                             http_response_code(200);
                            // echo json_encode($res->getResponse("(OK)", $data_id, 200, "Pago Creado"));
-                           return ;
-                           exit ;
+                           exit(1) ;
                            //http_response_code(200);
                         } else {
                             // no existe el id del pago..
-                           http_response_code(200);
-                           // echo json_encode($res->getResponse("(OK)", " ", 200, "Id Pago No existe"));
-                           return ;
-                           exit ;
                             $email = '';
                             //$status = '' ;
                             $payment_method = '';
                             $payment_type = '';
                             $total = 0;
+                           http_response_code(200);
+                           // echo json_encode($res->getResponse("(OK)", " ", 200, "Id Pago No existe"));
+                           exit(1) ;
+                          
                         }
 
 
@@ -341,8 +338,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                        //echo http_response_code(201);
                         //echo json_encode($res->getResponse("(CREATED)", " ", 201, "Type no existe.."));
                         http_response_code(200);
-                        return ;
-                        exit ;
+                        exit(1) ;
                         
                 }
             }
@@ -351,11 +347,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //echo http_response_code(405); // Method not allowed
         //echo json_encode($res->getResponse("warning", null, 405, "Estructura no valida.."));
         http_response_code(200);
-        return ;
+       exit(1) ;
     }
 } else {
    // echo http_response_code(405); // Method not allowed
     //echo json_encode($res->getResponse("warning", null, 405, "método no permitido"));
     http_response_code(200);
-    return ;
+    exit(1) ;
 }
