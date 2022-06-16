@@ -1,12 +1,14 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST");
-header("Content-Type: application/json; charset=utf-8");
 require_once '../config/config.php';
 require_once '../config/database.php';
 require_once '../vendor/autoload.php';
 require_once '../clases/Response.php';
 $res = new Response();
+
+//header("Access-Control-Allow-Origin: *");
+//header("Access-Control-Allow-Methods: POST");
+//header("Content-Type: application/json; charset=utf-8");
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -152,19 +154,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $sql_insert->execute([$idcobro, $idabonado, $periodo, $subtotal, $detalle,  $fch, $idcta, $id]);
                             }
                         }
-                       echo http_response_code(200);
+                       http_response_code(200);
                         //json_encode($res->getResponse("(OK)", $data_id, 200, "Pago Creado"));
-                        return http_response_code(200);
+                        return ;
+                        exit ;
                     } else {
                         // no existe el id del pago..
-                        echo http_response_code(200);
-                        //echo json_encode($res->getResponse("(OK)", " ", 200, "Id Pago No exite.."));
-                        return http_response_code(200);
                         $email = '';
                         //$status = '' ;
                         $payment_method = '';
                         $payment_type = '';
                         $total = 0;
+                        http_response_code(200);
+                        //echo json_encode($res->getResponse("(OK)", " ", 200, "Id Pago No exite.."));
+                        return ;
+                        exit ;
+                        
                     }
 
 
@@ -174,9 +179,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $sql = $con->prepare("INSERT INTO WEBHOOKS (type, info, action, live_mode)
                 VALUE (?, ?, ?, ?)");
                 $sql->execute(['default topic', $json, 'test', 1]);
-                echo http_response_code(201);
+                http_response_code(201);
                 //echo json_encode($res->getResponse("(CREATED)", " ", 201, "Topic no existe.."));
-                return http_response_code(201);
+                return  ;
+                exit;
                 
             }
         } else {
@@ -305,15 +311,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $sql_insert->execute([$idcobro, $idabonado, $periodo, $subtotal, $detalle,  $fch, $idcta, $id]);
                                 }
                             }
-                            echo http_response_code(200);
+                            http_response_code(200);
                            // echo json_encode($res->getResponse("(OK)", $data_id, 200, "Pago Creado"));
-                           return http_response_code(200); 
+                           return ;
+                           exit ;
                            //http_response_code(200);
                         } else {
                             // no existe el id del pago..
-                           echo http_response_code(200);
+                           http_response_code(200);
                            // echo json_encode($res->getResponse("(OK)", " ", 200, "Id Pago No existe"));
-                           return http_response_code(200);
+                           return ;
+                           exit ;
                             $email = '';
                             //$status = '' ;
                             $payment_method = '';
@@ -330,20 +338,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $sql = $con->prepare("INSERT INTO WEBHOOKS (type, info, action, live_mode)
                         VALUE (?, ?, ?, ?)");
                         $sql->execute(['default', $json, 'test', 1]);
-                       echo http_response_code(201);
+                       //echo http_response_code(201);
                         //echo json_encode($res->getResponse("(CREATED)", " ", 201, "Type no existe.."));
-                        return http_response_code(200);
+                        http_response_code(200);
+                        return ;
+                        exit ;
                         
                 }
             }
         }
     } else {
-        echo http_response_code(405); // Method not allowed
+        //echo http_response_code(405); // Method not allowed
         //echo json_encode($res->getResponse("warning", null, 405, "Estructura no valida.."));
-        return http_response_code(405);
+        http_response_code(405);
+        return ;
     }
 } else {
-    echo http_response_code(405); // Method not allowed
+   // echo http_response_code(405); // Method not allowed
     //echo json_encode($res->getResponse("warning", null, 405, "método no permitido"));
-    return http_response_code(405);
+    http_response_code(200);
+    return ;
 }
