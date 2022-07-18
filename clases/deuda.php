@@ -283,7 +283,7 @@ function agregar($id)
     $db = new Database();
     $con = $db->conectar();
 
-    $sql = $con->prepare("SELECT idabonado, idcta, periodo, nombre, impo1, impo2, impo3, impo4
+    $sql = $con->prepare("SELECT idabonado, idcta, periodo, nombre, impo1, impo2, impo3, impo4,
             vto1, vto2, vto3, vto4, cantvtos, id FROM CTABOTONPAGO WHERE idabonado=? and pagado = 0");
     $sql->execute([$id]);
     $row = $sql->fetchall(PDO::FETCH_ASSOC);

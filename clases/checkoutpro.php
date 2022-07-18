@@ -306,19 +306,15 @@ if ($productos != null) {
                                   
                                     $preference->save();
                                     
-                                ?>  
-                                <div class="row">              
-                                   <div class="col-md-8 offset-md-6 d-grid gap-2">
+                             
+                                
+                                 } ?>  
+                                <div class="d-flex align-items-center justify-content-center mt-4 mb-0"> 
+                                    
+                                        <a href="../index.php" class="btn btn-secondary" >Volver</a>
                                         <div class="checkout-btn">
 
                                         </div>
-                                   </div>
-                                </div>  
-                                <?php } ?>  
-                                <div class="row"> 
-                                    <div class="col-md-6 offset-md-6 d-grid gap-2">
-                                        <a href="../index.php" class="btn btn-secondary" >Volver</a>
-                                    </div>
                                 </div>
                                     
                                
@@ -440,7 +436,6 @@ if ($productos != null) {
         }
 
        
-
         const mp = new MercadoPago(<?php echo "'".$mp_public_key."'" ?>,{locale: 'es-AR'})
 
         mp.checkout({
@@ -449,7 +444,7 @@ if ($productos != null) {
             }, 
             render: {
                 container: '.checkout-btn',
-                label: 'Pagar con Mercado Pago'
+                label: 'Pagar con MP'
             }
         })
 

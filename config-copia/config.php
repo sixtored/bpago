@@ -11,6 +11,7 @@ define("ACCESS_TOKEN_MARKETPLACE","TOKEN_MARTEPLACE") ;
 define("CLIENT_IDMP"," ");
 define("CLIENT_SECRETMP", " ") ;
 define("URL_LINK_CONSULTA", "https://www.quimili.com.ar/bpago/comprobante.php") ;
+define("KEY_EMAIL","xxxxxxxxxxxx") ;
 session_start() ;
 
 date_default_timezone_set("America/Argentina/Buenos_Aires") ;

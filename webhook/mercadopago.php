@@ -1,14 +1,13 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST");
+header("Content-Type: application/json; charset=utf-8");
+
 require_once '../config/config.php';
 require_once '../config/database.php';
 require_once '../vendor/autoload.php';
 require_once '../clases/Response.php';
 $res = new Response();
-
-//header("Access-Control-Allow-Origin: *");
-//header("Access-Control-Allow-Methods: POST");
-//header("Content-Type: application/json; charset=utf-8");
-
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -346,12 +345,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         //echo http_response_code(405); // Method not allowed
         //echo json_encode($res->getResponse("warning", null, 405, "Estructura no valida.."));
-        http_response_code(200);
+        http_response_code(405);
        exit(1) ;
     }
 } else {
    // echo http_response_code(405); // Method not allowed
     //echo json_encode($res->getResponse("warning", null, 405, "método no permitido"));
-    http_response_code(200);
+   
+    http_response_code(405);
     exit(1) ;
 }
