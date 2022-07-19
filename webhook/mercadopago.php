@@ -171,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                        
 
-                        http_response_code(200);
+                       echo http_response_code(200);
                         //json_encode($res->getResponse("(OK)", $data_id, 200, "Pago Creado"));
                         if ($email != '') {
                             include '../clases/enviar_email.php';
@@ -184,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $payment_method = '';
                         $payment_type = '';
                         $total = 0;
-                        http_response_code(200);
+                       echo http_response_code(200);
                         //echo json_encode($res->getResponse("(OK)", " ", 200, "Id Pago No exite.."));
 
                         exit(1);
@@ -197,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $sql = $con->prepare("INSERT INTO WEBHOOKS (type, info, action, live_mode)
                 VALUE (?, ?, ?, ?)");
                     $sql->execute(['default topic', $json, 'test', 1]);
-                    http_response_code(201);
+                   echo http_response_code(201);
                     $email = 'sixtored@hotmail.com' ;
                     $noti = 'Notificacion Test';
                     include '../clases/enviar_email.php';
@@ -345,7 +345,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             }
 
                            
-                            http_response_code(200);
+                           echo http_response_code(200);
                             if ($email != '') {
                                 include '../clases/enviar_email.php';
                             }
@@ -359,7 +359,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $payment_method = '';
                             $payment_type = '';
                             $total = 0;
-                            http_response_code(200);
+                            echo http_response_code(200);
                             // echo json_encode($res->getResponse("(OK)", " ", 200, "Id Pago No existe"));
                             exit(1);
                         }
@@ -376,11 +376,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         //echo http_response_code(201);
                         //echo json_encode($res->getResponse("(CREATED)", " ", 201, "Type no existe.."));
                         echo http_response_code(200);
-/*
+
                         $email = 'sixtored@hotmail.com' ;
                         $noti = 'Notificacion Test';
                         include '../clases/enviar_email.php';
-                        */
+                        
                         exit(1);
                 }
             }
@@ -388,13 +388,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         //echo http_response_code(405); // Method not allowed
         //echo json_encode($res->getResponse("warning", null, 405, "Estructura no valida.."));
-        http_response_code(405);
+       echo http_response_code(405);
         exit(1);
     }
 } else {
     // echo http_response_code(405); // Method not allowed
     //echo json_encode($res->getResponse("warning", null, 405, "método no permitido"));
 
-    http_response_code(405);
+   echo http_response_code(405);
     exit(1);
 }
