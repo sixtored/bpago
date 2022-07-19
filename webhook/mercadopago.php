@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }
 
                         $noti = $noti . '<br> Total: ' . $total . '<br>';
-                        $noti = $noti . '<a href="' . URL_LINK_CONSULTA . '?payment=' . $payment . '"/>Comprobante</a>';
+                        $noti = $noti . URL_LINK_CONSULTA . '?payment=' . $payment ;
                         $noti = $noti . '</html>';
 
                        
@@ -347,7 +347,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             }
 
                             $noti = $noti . '<br> Total: ' . $total . '<br>';
-                            $noti = $noti . '<a href="' . URL_LINK_CONSULTA . '?payment=' . $payment . '"/>Comprobante</a>';
+                            $noti = $noti . URL_LINK_CONSULTA . '?payment=' . $payment ;
                             $noti = $noti . '</html>';
 
                             if ($email != '') {
