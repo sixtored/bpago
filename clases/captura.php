@@ -70,7 +70,7 @@ if ($httpcode == 200) {
     $fch = $d->format('Y-m-d H:i:s');
     $idcaja = 1;
     $idcob = 1;
-    $payment = $data_id;
+    //$payment = $data_id;
     $status = $contents['status'];
     if (isset($contents['collector_id'])) $collection_id = $contents['collector_id'];
     else $collection_id = '';
