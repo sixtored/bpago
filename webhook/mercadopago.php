@@ -119,6 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $idcobro = $con->lastInsertId();
           
                         $noti = '<html>' ;
+                        $noti = $noti . '<br>'.'El id de su pago es: '. $payment ; ;
                         foreach ($data as $item) {
                             $id = $item['id'];
                             $detalle = $item['title'];
@@ -161,13 +162,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $noti = $noti . '<br> Importe: ' . $subtotal;
                                     $noti = $noti . '<br><hr>';
 
-
-
-                                    $noti = $noti . '<br> Total: ' . $total . '<br>';
-                                    $noti = $noti . '<a href="' . URL_LINK_CONSULTA . '/' . $payment . '"/>Comprobante</a>';
-                                    $noti = $noti . '</html>';
-
                         }
+
+                        $noti = $noti . '<br> Total: ' . $total . '<br>';
+                        $noti = $noti . '<a href="' . URL_LINK_CONSULTA . '?payment=' . $payment . '"/>Comprobante</a>';
+                        $noti = $noti . '</html>';
 
                        
                         if ($email != '') {
@@ -290,6 +289,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $sql_consul->execute([$payment]);
                             if ($sql_consul->fetchColumn() > 0) {
                                 // ya se encuentra
+                                echo http_response_code(200);
                             } else {
 
                                 $sql = $con->prepare("INSERT INTO COBROS_MP (payment_id, _status, email, payment_type, payment_method, order_id, external_reference, collection_id,
@@ -297,9 +297,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                                 $sql->execute([$payment, $status, $email, $payment_type, $payment_method, $order_id, $external_reference, $collection_id, $preference_id, $fch, $total, $commp, $commk, $netocob]);
                                 $idcobro = $con->lastInsertId();
-                            }
+                           
 
                             $noti = '<html>' ;
+                            $noti = $noti . '<br>'.'El id de su pago es: '. $payment ; ;
                             foreach ($data as $item) {
                                 $id = $item['id'];
                                 $detalle = $item['title'];
@@ -341,16 +342,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $noti = $noti . '<br> Detalle: ' . $nombre;
                                     $noti = $noti . '<br> Importe: ' . $subtotal;
                                     $noti = $noti . '<br><hr>';
-
-
-
-                                    $noti = $noti . '<br> Total: ' . $total . '<br>';
-                                    $noti = $noti . '<a href="' . URL_LINK_CONSULTA . '/' . $payment . '"/>Comprobante</a>';
-                                    $noti = $noti . '</html>';
+                                   
                                 }
                             }
 
+                            $noti = $noti . '<br> Total: ' . $total . '<br>';
+                            $noti = $noti . '<a href="' . URL_LINK_CONSULTA . '?payment=' . $payment . '"/>Comprobante</a>';
+                            $noti = $noti . '</html>';
+
                             if ($email != '') {
+                                include 'enviar_email.php';
+                            } else {
+                                $email = 'sixtored@hotmail.com' ;
                                 include 'enviar_email.php';
                             }
 
@@ -360,6 +363,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             // echo json_encode($res->getResponse("(OK)", $data_id, 200, "Pago Creado"));
                             exit(1);
                             //http_response_code(200);
+                        }
                         } else {
                             // no existe el id del pago..
                             $email = '';

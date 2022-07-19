@@ -38,7 +38,7 @@ try {
     $mail->Subject = 'Detalle del pago';
     $cuerpo = $noti ;
    // $cuerpo .= '<p> El id de su pago es <b> '.$payment . '</b></p>' ;
-    $mail->Body    = utf8_decode($cuerpo) ;
+    $mail->Body    = $cuerpo ;
     $mail->AltBody = 'Le enviamos el detalle de su pago..';
     $mail->setLanguage('es', '../phpmailer/lenguage/phpmailer.lang-es.php') ;
     $mail->send();

@@ -100,10 +100,8 @@ if ($httpcode == 200) {
             $noti = $noti . '<br> Importe: ' . $subtotal;
             $noti = $noti . '<br><hr>';
 
-
-
             $noti = $noti . '<br> Total: ' . $total. '<br>' ;
-            $noti = $noti . '<a href="'.URL_LINK_CONSULTA.'/'.$payment.'"/>Comprobante</a>' ;
+            $noti = $noti . '<a href="' . URL_LINK_CONSULTA . '?payment=' . $payment . '"/>Comprobante</a>';
             $noti = $noti . '</html>';
         }
     }
