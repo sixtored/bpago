@@ -40,7 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $application_id = $info->application_id;
             $version = $info->attempts;
             $action = 'topic';
+            if ($info->live_mode = "true") {
             $live_mode = 1;
+            } else {$live_mode = 0;}
             $sql = $con->prepare("INSERT INTO WEBHOOKS (aplication_id, user_id, version, type, info, data_id, resource, action, live_mode)
                 VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
