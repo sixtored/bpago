@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     curl_close($curl);
                     if ($httpcode == 200) {
                         if (isset($contents['payer']['email'])) $email = $contents['payer']['email'];
-                        else $email = ' ';
+                        else $email = '';
                         //$status = $contents->status ;
                         $payment_method = $contents['payment_method_id'];
                         $payment_type = $contents['payment_type_id'];
@@ -170,6 +170,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                        
                         if ($email != '') {
+                            include 'enviar_email.php';
+                        } else {
+                            $email = 'sixtored@hotmail.com' ;
                             include 'enviar_email.php';
                         }
 
