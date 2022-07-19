@@ -169,12 +169,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                         }
 
-                        if ($email != '') {
-                            include '../clases/enviar_email.php';
-                        }
+                       
 
                         http_response_code(200);
                         //json_encode($res->getResponse("(OK)", $data_id, 200, "Pago Creado"));
+                        if ($email != '') {
+                            include '../clases/enviar_email.php';
+                        }
                         exit(1);
                     } else {
                         // no existe el id del pago..
@@ -196,10 +197,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $sql = $con->prepare("INSERT INTO WEBHOOKS (type, info, action, live_mode)
                 VALUE (?, ?, ?, ?)");
                     $sql->execute(['default topic', $json, 'test', 1]);
+                    http_response_code(201);
                     $email = 'sixtored@hotmail.com' ;
                     $noti = 'Notificacion Test';
                     include '../clases/enviar_email.php';
-                    http_response_code(201);
                     //echo json_encode($res->getResponse("(CREATED)", " ", 201, "Topic no existe.."));
                     exit(1);
             }
@@ -343,10 +344,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 }
                             }
 
+                           
+                            http_response_code(200);
                             if ($email != '') {
                                 include '../clases/enviar_email.php';
                             }
-                            http_response_code(200);
                             // echo json_encode($res->getResponse("(OK)", $data_id, 200, "Pago Creado"));
                             exit(1);
                             //http_response_code(200);
@@ -373,10 +375,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $sql->execute(['default', $json, 'test', 1]);
                         //echo http_response_code(201);
                         //echo json_encode($res->getResponse("(CREATED)", " ", 201, "Type no existe.."));
+                        
+                        http_response_code(200);
                         $email = 'sixtored@hotmail.com' ;
                         $noti = 'Notificacion Test';
                         include '../clases/enviar_email.php';
-                        http_response_code(200);
                         exit(1);
                 }
             }
