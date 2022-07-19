@@ -89,22 +89,23 @@ if ($httpcode == 200) {
             $sql->execute([$id]);
             $dato = $sql->fetch(PDO::FETCH_ASSOC);
             $nombre = $dato['nombre'] . '[' . $dato['periodo'] . ']';
-            $idabonado = $dato['idabonado'];
+            $idabonado = $external_reference;
             $idcta = $dato['idcta'];
             $periodo = $dato['periodo'];
             $pagado = 1;
 
             $noti = $noti . '<br> idabonado: ' . $idabonado;
             $noti = $noti . '<br> Periodo: ' . $periodo;
-            $noti = $noti . '<br> Detalle: ' . $nombre;
+            $noti = $noti . '<br> Detalle: ' . $detalle;
             $noti = $noti . '<br> Importe: ' . $subtotal;
             $noti = $noti . '<br><hr>';
 
-            $noti = $noti . '<br> Total: ' . $total. '<br>' ;
-            $noti = $noti . URL_LINK_CONSULTA . '?payment=' . $payment ;
-            $noti = $noti . '</html>';
         }
     }
+
+    $noti = $noti . '<br> Total: ' . $total. '<br>' ;
+    $noti = $noti . URL_LINK_CONSULTA . '?payment=' . $payment ;
+    $noti = $noti . '</html>';
     //http_response_code(200);
     //return 200 ;
 }

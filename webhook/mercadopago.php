@@ -132,8 +132,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $sql = $con->prepare("SELECT id, idcta, idabonado, pagado, periodo, nombre FROM CTABOTONPAGO WHERE id = ? and pagado = 0");
                                 $sql->execute([$id]);
                                 $dato = $sql->fetch(PDO::FETCH_ASSOC);
+
                                 $nombre = $dato['nombre'] . '[' . $dato['periodo'] . ']';
-                                $idabonado = $dato['idabonado'];
+                                $idabonado = $external_reference;
                                 $idcta = $dato['idcta'];
                                 $periodo = $dato['periodo'];
                                 $pagado = 1;
@@ -158,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                                     $noti = $noti . '<br> idabonado: ' . $idabonado;
                                     $noti = $noti . '<br> Periodo: ' . $periodo;
-                                    $noti = $noti . '<br> Detalle: ' . $nombre;
+                                    $noti = $noti . '<br> Detalle: ' . $detalle;
                                     $noti = $noti . '<br> Importe: ' . $subtotal;
                                     $noti = $noti . '<br><hr>';
 
@@ -314,7 +315,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $sql->execute([$id]);
                                     $dato = $sql->fetch(PDO::FETCH_ASSOC);
                                     $nombre = $dato['nombre'] . '[' . $dato['periodo'] . ']';
-                                    $idabonado = $dato['idabonado'];
+                                    $idabonado = $external_reference ;
                                     $idcta = $dato['idcta'];
                                     $periodo = $dato['periodo'];
                                     $pagado = 1;
@@ -339,7 +340,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                                     $noti = $noti . '<br> idabonado: ' . $idabonado;
                                     $noti = $noti . '<br> Periodo: ' . $periodo;
-                                    $noti = $noti . '<br> Detalle: ' . $nombre;
+                                    $noti = $noti . '<br> Detalle: ' . $detalle;
                                     $noti = $noti . '<br> Importe: ' . $subtotal;
                                     $noti = $noti . '<br><hr>';
                                    
