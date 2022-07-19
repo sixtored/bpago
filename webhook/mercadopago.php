@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $sql->execute([$payment, $status, $email, $payment_type, $payment_method, $order_id, $external_reference, $collection_id, $preference_id, $fch, $total, $commp, $commk, $netocob]);
                             $idcobro = $con->lastInsertId();
                         }
-
+                        $noti = '<html>' ;
                         foreach ($data as $item) {
                             $id = $item['id'];
                             $detalle = $item['title'];
@@ -152,9 +152,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $sql_insert->execute([$idcobro, $idabonado, $periodo, $subtotal, $detalle,  $fch, $idcta, $id]);
                             }
 
+                                    $noti = $noti . '<br> idabonado: ' . $idabonado;
+                                    $noti = $noti . '<br> Periodo: ' . $periodo;
+                                    $noti = $noti . '<br> Detalle: ' . $nombre;
+                                    $noti = $noti . '<br> Importe: ' . $subtotal;
+                                    $noti = $noti . '<br><hr>';
+
+
+
+                                    $noti = $noti . '<br> Total: ' . $total . '<br>';
+                                    $noti = $noti . '<a href="' . URL_LINK_CONSULTA . '/' . $payment . '"/>Comprobante</a>';
+                                    $noti = $noti . '</html>';
+
                         }
 
                        
+                        if ($email != '') {
+                            include 'enviar_email.php';
+                        }
 
                        echo http_response_code(200);
                         //json_encode($res->getResponse("(OK)", $data_id, 200, "Pago Creado"));
@@ -327,6 +342,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 }
                             }
 
+                            if ($email != '') {
+                                include 'enviar_email.php';
+                            }
+
                            
                            echo http_response_code(200);
                         
@@ -349,11 +368,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         break;
 
                     default:
-
+/*
                         $email = 'sixtored@hotmail.com' ;
                         $noti = 'Notificacion Test';
                         include 'enviar_email.php';
-
+*/
 
                         $sql = $con->prepare("INSERT INTO WEBHOOKS (type, info, action, live_mode)
                         VALUE (?, ?, ?, ?)");
