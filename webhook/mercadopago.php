@@ -379,7 +379,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                         $email = 'sixtored@hotmail.com' ;
                         $noti = 'Notificacion Test';
-                        include '../clases/enviar_email.php';
+                        include 'enviar_email.php';
   
                         exit(1);
                 }
