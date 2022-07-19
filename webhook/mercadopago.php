@@ -375,11 +375,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $sql->execute(['default', $json, 'test', 1]);
                         //echo http_response_code(201);
                         //echo json_encode($res->getResponse("(CREATED)", " ", 201, "Type no existe.."));
-                        echo http_response_code(200);
-
                         $email = 'sixtored@hotmail.com' ;
                         $noti = 'Notificacion Test';
                         include 'enviar_email.php';
+                        echo http_response_code(200);
+
+                       
   
                         exit(1);
                 }
