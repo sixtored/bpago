@@ -103,7 +103,7 @@ if ($httpcode == 200) {
 
 
             $noti = $noti . '<br> Total: ' . $total. '<br>' ;
-            $noti = $noti . '<a href="'.URL_LINK_CONSULTA.'"/>Comprobante</a>' ;
+            $noti = $noti . '<a href="'.URL_LINK_CONSULTA.'/'.$payment.'"/>Comprobante</a>' ;
             $noti = $noti . '</html>';
         }
     }
