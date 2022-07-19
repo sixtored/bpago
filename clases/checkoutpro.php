@@ -259,7 +259,7 @@ if ($productos != null) {
                                     $preference->marketplace_fee = floatval($mp_fee_owner);
 
                                     // Opcional para setear las url del webhook
-                                    $preference->notification_url = 'https://wwww.quimili.com.ar/bpago/webhook/mercadopago.php';
+                                    $preference->notification_url = 'https://wwww.quimili.com.ar/bpago/webhook/mercadopago.php?source_news=webhooks';
 
                 
                                     // Redirecciona al webcheckout de mercadopago, pueden usar este método u otros como poner el link en un boton y mostrar en una vista con el detalle de la compra y el boton pagar.

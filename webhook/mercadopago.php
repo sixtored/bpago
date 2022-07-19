@@ -350,6 +350,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     default:
 
+                        $email = 'sixtored@hotmail.com' ;
+                        $noti = 'Notificacion Test';
+                        include 'enviar_email.php';
+
 
                         $sql = $con->prepare("INSERT INTO WEBHOOKS (type, info, action, live_mode)
                         VALUE (?, ?, ?, ?)");
@@ -358,10 +362,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         //echo json_encode($res->getResponse("(CREATED)", " ", 201, "Type no existe.."));
                         
                         echo http_response_code(200);
-
-                        $email = 'sixtored@hotmail.com' ;
-                        $noti = 'Notificacion Test';
-                        include 'enviar_email.php';
                        
   
                         exit(1);
