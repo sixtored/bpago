@@ -89,9 +89,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $commp = (float) $com_mp['0']['amount'];
                         // comision de mercado pago
                         $commk = (float) $com_mp['1']['amount'];
-
-                        $netocob = $total - ($commp + $commk);
                         // comision del marketplace..
+                        $netocob = $total - ($commp + $commk);
+                        
                         //var_dump($com_mp) ;
 
                         $tpago = 1;
@@ -109,6 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $sql_consul->execute([$payment]);
                         if ($sql_consul->fetchColumn() > 0) {
                             // ya se encuentra
+                            echo http_response_code(200);
                         } else {
 
                             $sql = $con->prepare("INSERT INTO COBROS_MP (payment_id, _status, email, payment_type, payment_method, order_id, external_reference, collection_id,
@@ -116,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                             $sql->execute([$payment, $status, $email, $payment_type, $payment_method, $order_id, $external_reference, $collection_id, $preference_id, $fch, $total, $commp, $commk, $netocob]);
                             $idcobro = $con->lastInsertId();
-                        }
+          
                         $noti = '<html>' ;
                         foreach ($data as $item) {
                             $id = $item['id'];
@@ -176,10 +177,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             include 'enviar_email.php';
                         }
 
+
                        echo http_response_code(200);
                         //json_encode($res->getResponse("(OK)", $data_id, 200, "Pago Creado"));
                        
                         exit(1);
+                    }
                     } else {
                         // no existe el id del pago..
                         $email = '';
