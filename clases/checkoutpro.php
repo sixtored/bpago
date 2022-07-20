@@ -27,6 +27,10 @@ exit() ;
 $db = new Database();
 $con = $db->conectar();
 $clave = 1 ;
+$mkplace_tipo = 1 ; 
+// 1=valor fijo comison 2=procentaje..
+$mkplace_valor = 40 ;
+// comison fija $40.-
 
 $sql = $con->prepare("SELECT mp_access_token, mp_public_key, mp_user_id, mp_expired_in FROM MP_USERS WHERE id=?");
 $sql->execute([$clave]);

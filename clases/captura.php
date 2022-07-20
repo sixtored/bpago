@@ -2,13 +2,12 @@
 
 require_once '../config/config.php';
 require_once '../config/database.php';
-require_once 'config/registro.php' ;
+
 
 $db = new Database();
 $con = $db->conectar();
-$oregistro = new Registro();
-$email_not = '' ;
-$email_not = $oregistro->LeerClaveRegD('NOTI_EMAIL') ;
+$email_not = 'sixtored@hotmail.com' ;
+
 
 date_default_timezone_set("America/Argentina/Buenos_Aires");
 // setlocale(LC_TIME, 'spanish');

@@ -6,7 +6,6 @@ header("Content-Type: application/json; charset=utf-8");
 require_once '../config/config.php';
 require_once '../config/database.php';
 require_once '../vendor/autoload.php';
-require_once '../config/registro.php' ;
 require_once '../clases/Response.php';
 $res = new Response();
 
@@ -21,10 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email_not = '' ;
         $idcaja = 0;
         $idcob = 0;
-        $clave = $oregistro->LeerClaveReg('IDCLAVE') ;
-        $email_not = $oregistro->LeerClaveRegD('NOTI_EMAIL') ;
-        $idcaja = $oregistro->LeerClaveReg('IDCAJA') ;
-        $idcob = $oregistro->LeerClaveReg('IDCOBRADOR') ;
+        $clave = 1 ;
+        $email_not = 'sixtored@hotmail.com' ;
+        $idcaja = 1 ;
+        $idcob = 1 ;
 
         $db = new Database();
         $con = $db->conectar();
