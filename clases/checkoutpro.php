@@ -1,7 +1,7 @@
 <?php
 require_once '../config/config.php';
-require_once '../config/database.php';
 require_once '../config/registro.php' ;
+require_once '../config/database.php';
 require_once '../vendor/autoload.php' ;
 
 $oregistro = new Registro() ;
