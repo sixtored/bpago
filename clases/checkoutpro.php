@@ -1,8 +1,8 @@
 <?php
 require_once '../config/config.php';
-require_once '../config/registro.php' ;
 require_once '../config/database.php';
 require_once '../vendor/autoload.php' ;
+require_once '../config/registro.php' ;
 
 $oregistro = new Registro() ;
 $clave = 1 ;
@@ -20,6 +20,7 @@ echo '<br>' ;
 echo $mkplace_tipo ;
 echo '<br>' ;
 echo $mkplace_valor ;
+echo phpinfo() ;
 exit() ;
 
 $db = new Database();
