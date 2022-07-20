@@ -45,15 +45,40 @@ if (isset($_GET['payment'])) {
                                     <h4 class="text-center font-weight-light my-2"><?php echo $payment; ?></h4>
                                 </div>
                                 <div class="card-body">
+
+                                <div class="table-responsive-sm">
+                                        <table class="table table-sm text-balck">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Detalle</th>
+                                                    <th scope="col">Periodo</th>
+                                                    <th scope="col">Importe/s</th>
+                                                    <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
                                   <?php 
                                   $total = 0.00 ;
-                                  foreach ($dato as $row) {
-                                    echo $row['nombre'] ;
-                                    echo $row['periodo'] ;
-                                    echo $row['qimpo'] ;
+                                  $ii = 1 ;
+                                  foreach ($dato as $row) {?>
+                                    <tr>
+                                         <th scope="row"><?php echo $ii; ?></th>
+                                            <td colspan="2"><?php echo $row['nombre'] . ' ' . $row['periodo'] . ' ' . date("d/m/Y", strtotime($row['fchpago'])) ?></td>
+                                            <td><?php echo MONEDA . number_format($row['qimpo'], 2, ',', '.'); ?></td>
+
+                                            <td>
+                                    
+                                            </td>
+                                    </tr>
+                                   <?php  
+        
                                     $total = $total + $row['qimpo'] ;
                                 }
                                   ?>
+                                            </tbody>
+                                        </table>
+                                </div>
                                 </div>
                                 <div class="card-footer text-center py-3">
                                 <p class="h3" id="total">Total pagado<?php echo ' '.MONEDA . number_format($total, 2, ',', '.'); ?></p>
