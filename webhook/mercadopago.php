@@ -14,8 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $json = file_get_contents('php://input');
     $info = json_decode($json);
     if ((isset($info->topic)) || (isset($info->type))) {
-
-        $oregistro = new Registro() ;
         $clave = 0 ;
         $email_not = '' ;
         $idcaja = 0;
