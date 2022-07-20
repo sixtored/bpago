@@ -1,5 +1,5 @@
 <?php 
-require 'config/config.php' ;
+require_once 'config/config.php' ;
  if (isset($_SESSION['carrito']['producto'])) {
     session_unset() ;
 }

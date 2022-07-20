@@ -2,6 +2,7 @@
 require_once '../config/config.php';
 require_once '../config/database.php';
 require_once '../vendor/autoload.php' ;
+/*
 require_once '../config/registro.php' ;
 
 $oregistro = new Registro() ;
@@ -14,7 +15,7 @@ echo $mpaccess_token ;
 echo '<br>' ;
 echo $mp_public_key ;
 echo '<br>' ;
-*/
+
 echo $clave ;
 echo '<br>' ;
 echo $mkplace_tipo ;
@@ -22,10 +23,10 @@ echo '<br>' ;
 echo $mkplace_valor ;
 echo phpinfo() ;
 exit() ;
-
+*/
 $db = new Database();
 $con = $db->conectar();
-
+$clave = 1 ;
 
 $sql = $con->prepare("SELECT mp_access_token, mp_public_key, mp_user_id, mp_expired_in FROM MP_USERS WHERE id=?");
 $sql->execute([$clave]);

@@ -1,7 +1,7 @@
 <?php
 
-require '../config/config.php';
-require '../config/database.php';
+require_once '../config/config.php';
+require_once '../config/database.php';
 require_once 'config/registro.php' ;
 
 $db = new Database();
