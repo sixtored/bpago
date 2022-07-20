@@ -9,10 +9,13 @@ $clave = 1 ;
 $clave = $oregistro->LeerClaveReg('IDCLAVE') ;
 $mkplace_tipo = $oregistro->LeerClaveReg('MKPLACE_TIPO') ;
 $mkplace_valor = $oregistro->LeerClaveReg('MKPLACE_COMIS') ;
-
+/*
 echo $mpaccess_token ;
 echo '<br>' ;
 echo $mp_public_key ;
+echo '<br>' ;
+*/
+echo $clave ;
 echo '<br>' ;
 echo $mkplace_tipo ;
 echo '<br>' ;
