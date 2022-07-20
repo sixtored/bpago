@@ -53,6 +53,7 @@ if (isset($_GET['payment'])) {
                                                     <th scope="col">#</th>
                                                     <th scope="col">Detalle</th>
                                                     <th scope="col">Periodo</th>
+                                                    <th scope="col">Fch Pago</th>
                                                     <th scope="col">Importe/s</th>
                                                     <th scope="col"></th>
                                                 </tr>
@@ -64,12 +65,10 @@ if (isset($_GET['payment'])) {
                                   foreach ($dato as $row) {?>
                                     <tr>
                                          <th scope="row"><?php echo $ii; ?></th>
-                                            <td colspan="2"><?php echo $row['nombre'] . ' ' . $row['periodo'] . ' ' . date("d/m/Y", strtotime($row['fchpago'])) ?></td>
+                                            <td colspan="2"><?php echo $row['nombre'] . ' ' . $row['periodo']?></td>
+                                            <td><?php echo date("d/m/Y", strtotime($row['fchpago'])) ?></td>
                                             <td><?php echo MONEDA . number_format($row['qimpo'], 2, ',', '.'); ?></td>
-
-                                            <td>
-                                    
-                                            </td>
+                                            <td></td>
                                     </tr>
                                    <?php  
         
