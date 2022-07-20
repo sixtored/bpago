@@ -2,9 +2,13 @@
 
 require '../config/config.php';
 require '../config/database.php';
+require_once 'config/registro.php' ;
 
 $db = new Database();
 $con = $db->conectar();
+$oregistro = new Registro();
+$email_not = '' ;
+$email_not = $oregistro->LeerClaveRegD('NOTI_EMAIL') ;
 
 date_default_timezone_set("America/Argentina/Buenos_Aires");
 // setlocale(LC_TIME, 'spanish');
@@ -76,6 +80,7 @@ if ($httpcode == 200) {
     else $collection_id = '';
     $preference_id = $contents['id'];
     $noti = '<html>';
+    $noti = $noti . '<br>'.'El id de su pago es: '. $payment ; ;
     foreach ($data as $item) {
         $id = $item['id'];
         $detalle = $item['title'];
@@ -116,6 +121,11 @@ curl_close($curl);
 
 
 if ($email != '') {
+    include 'enviar_email.php';
+} 
+
+if ($email_not != '') {
+    $email = $email_not ;
     include 'enviar_email.php';
 }
 

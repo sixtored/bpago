@@ -6,6 +6,7 @@ header("Content-Type: application/json; charset=utf-8");
 require_once '../config/config.php';
 require_once '../config/database.php';
 require_once '../vendor/autoload.php';
+require_once '../config/registro.php' ;
 require_once '../clases/Response.php';
 $res = new Response();
 
@@ -15,11 +16,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $info = json_decode($json);
     if ((isset($info->topic)) || (isset($info->type))) {
 
+        $oregistro = new Registro() ;
+        $clave = 0 ;
+        $email_not = '' ;
+        $idcaja = 0;
+        $idcob = 0;
+        $clave = $oregistro->LeerClaveReg('IDCLAVE') ;
+        $email_not = $oregistro->LeerClaveRegD('NOTI_EMAIL') ;
+        $idcaja = $oregistro->LeerClaveReg('IDCAJA') ;
+        $idcob = $oregistro->LeerClaveReg('IDCOBRADOR') ;
+
         $db = new Database();
         $con = $db->conectar();
-
-
-        $clave = 1;
 
         $sql = $con->prepare("SELECT mp_access_token, mp_public_key, mp_user_id, mp_expired_in FROM MP_USERS WHERE id=?");
         $sql->execute([$clave]);
@@ -97,8 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $tpago = 1;
                         $d = new DateTime($contents['date_created']);
                         $fch = $d->format('Y-m-d H:i:s');
-                        $idcaja = 1;
-                        $idcob = 1;
+                       
                         $payment = $data_id;
                         $status = $contents['status'];
                         if (isset($contents['collector_id'])) $collection_id = $contents['collector_id'];
@@ -172,8 +179,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                        
                         if ($email != '') {
                             include 'enviar_email.php';
-                        } else {
-                            $email = 'sixtored@hotmail.com' ;
+                        } 
+                        if ($email_not != '') {
+                            $email = $email_not ;
                             include 'enviar_email.php';
                         }
 
@@ -278,8 +286,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $tpago = 1;
                             $d = new DateTime($contents['date_created']);
                             $fch = $d->format('Y-m-d H:i:s');
-                            $idcaja = 1;
-                            $idcob = 1;
+                            
                             $payment = $data_id;
                             $status = $contents['status'];
                             if (isset($contents['collector_id'])) $collection_id = $contents['collector_id'];
@@ -353,8 +360,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                             if ($email != '') {
                                 include 'enviar_email.php';
-                            } else {
-                                $email = 'sixtored@hotmail.com' ;
+                            } 
+                            
+                            if ($email_not != '') {
+                                $email = $email_not ;
                                 include 'enviar_email.php';
                             }
 

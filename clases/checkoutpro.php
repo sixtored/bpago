@@ -1,12 +1,18 @@
 <?php
 require_once '../config/config.php';
 require_once '../config/database.php';
+require_once '../config/registro.php' ;
 require_once '../vendor/autoload.php' ;
+
+$oregistro = new Registro() ;
+$clave = 1 ;
+$clave = $oregistro->LeerClaveReg('IDCLAVE') ;
+$mkplace_tipo = $oregistro->LeerClaveReg('MKPLACE_TIPO') ;
+$mkplace_valor = $oregistro->LeerClaveReg('MKPLACE_COMIS') ;
 
 $db = new Database();
 $con = $db->conectar();
 
-$clave = 1 ;
 
 $sql = $con->prepare("SELECT mp_access_token, mp_public_key, mp_user_id, mp_expired_in FROM MP_USERS WHERE id=?");
 $sql->execute([$clave]);
@@ -248,8 +254,16 @@ if ($productos != null) {
                                        // "installments" => 12,
                                        // "default_installments" => 1
                                     );
+
+                                    if ($mkplace_tipo=1){
+                                        // si es valor fijo..
+                                        $mp_fee_owner = $mkplace_valor ;
+                                    } elseif ($mkplace_tipo=2) {
+                                        // si es un porcentaje..
+                                        $mp_fee_owner = ($total * $mkplace_valor)/100 ;
+                                    }
                                     
-                                    $mp_fee_owner = ($total * 2)/100 ;
+                                    
                                     // Creación de un código external reference para vincular el pago con un pedido en nuestra DB
                                     $preference->external_reference = $idabonado;
 
